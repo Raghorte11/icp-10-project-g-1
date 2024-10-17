@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Contact Netflix</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Netflix Sans', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .navbar {
+            padding: 20px 50px;
+            background: linear-gradient(to bottom, #000 0%, transparent 100%);
+        }
+
+        .netflix-logo {
+            color: #e50914;
+            font-size: 32px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://assets.nflxext.com/ffe/siteui/vlv3/fc164b4b-f085-44ee-bb7f-ec7df8539eff/d23a1608-7d90-4da1-93d6-bae2fe60a69b/IN-en-20230814-popsignuptwoweeks-perspective_alpha_website_large.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-container {
+            background: rgba(0, 0, 0, 0.75);
+            border-radius: 4px;
+            padding: 40px;
+            max-width: 450px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 4px;
+            background: #333;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8c8c8c;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group textarea + label {
+            top: 20px;
+            transform: none;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:valid + label,
+        .input-group textarea:focus + label,
+        .input-group textarea:valid + label {
+            top: -10px;
+            left: 10px;
+            font-size: 14px;
+            color: #e50914;
+            background: #000;
+            padding: 0 5px;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            background: #454545;
+            box-shadow: 0 0 5px rgba(229, 9, 20, 0.5);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #8c8c8c;
+            cursor: pointer;
+            padding: 5px 10px;
+            z-index: 2;
+        }
+
+        .password-toggle:hover {
+            color: #e50914;
+        }
+
+        .password-strength {
+            font-size: 12px;
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+
+        .strength-weak { color: #e50914; }
+        .strength-medium { color: #ffa500; }
+        .strength-strong { color: #4CAF50; }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 16px;
+            background: #e50914;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background: #f40612;
+        }
+
+        .help-text {
+            margin-top: 20px;
+            color: #737373;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .social-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: #737373;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #e50914;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .contact-container {
+            animation: fadeIn 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="netflix-logo">NETFLIX</a>
+    </nav>
+    
+    <div class="hero">
+        <div class="contact-container">
+            <h1>Contact Us</h1>
+            <form id="contactForm" onsubmit="return validateForm(event)">
+                <div class="input-group">
+                    <input type="text" id="name" required>
+                    <label for="name">Your Name</label>
+                </div>
+                
+                <div class="input-group">
+                    <input type="email" id="email" required>
+                    <label for="email">Email Address</label>
+                </div>
+
+                <div class="input-group">
+                    <div class="password-container">
+                        <input type="password" id="password" required minlength="8">
+                        <label for="password">Password</label>
+                        <button type="button" class="password-toggle" onclick="togglePasswordVisibility()">Show</button>
+                    </div>
+                    <div class="password-strength" id="passwordStrength"></div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" id="subject" required>
+                    <label for="subject">Subject</label>
+                </div>
+                
+                <div class="input-group">
+                    <textarea id="message" required></textarea>
+                    <label for="message">Your Message</label>
+                </div>
+                
+                <button type="submit">Send Message</button>
+            </form>
+            
+            <div class="help-text">
+                Having trouble? Visit our Help Center or call 1-844-505-2993
+            </div>
+            
+            <div class="social-links">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleButton = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleButton.textContent = 'Hide';
+            } else {
+                passwordInput.type = 'password';
+                toggleButton.textContent = 'Show';
+            }
+        }
+
+        document.getElementById('password').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strengthIndicator = document.getElementById('passwordStrength');
+
+            const hasLength = password.length >= 8;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumbers = /\d/.test(password);
+            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            
+            let strength = 0;
+            if (hasLength) strength++;
+            if (hasUpperCase && hasLowerCase) strength++;
+            if (hasNumbers) strength++;
+            if (hasSpecialChar) strength++;
+
+            if (password.length === 0) {
+                strengthIndicator.textContent = '';
+            } else if (strength < 2) {
+                strengthIndicator.textContent = 'Weak password';
+                strengthIndicator.className = 'password-strength strength-weak';
+            } else if (strength < 3) {
+                strengthIndicator.textContent = 'Medium password';
+                strengthIndicator.className = 'password-strength strength-medium';
+            } else {
+                strengthIndicator.textContent = 'Strong password';
+                strengthIndicator.className = 'password-strength strength-strong';
+            }
+        });
+
+        function validateForm(event) {
+            event.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long');
+                return false;
+            }
+
+            alert('Form submitted successfully!');
+            return true;
+        }
+        document.getElementById('contactForm').addEventListener('reset', function() {
+            document.getElementById('passwordStrength').textContent = '';
+        });
+    </script>
+</body>
+</html>
